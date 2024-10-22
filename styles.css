@@ -1,0 +1,663 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f0f2f5;
+}
+
+.container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: #1a237e;
+    margin-bottom: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #344767;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.network-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.network-button {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.3s;
+}
+
+.network-button.active {
+    background: #2196f3;
+    color: white;
+    border-color: #2196f3;
+}
+
+.button {
+    background: #2196f3;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.button:hover {
+    background: #1976d2;
+}
+
+.button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.button-secondary {
+    background: #f44336;
+    width: auto;
+}
+
+.button-secondary:hover {
+    background: #d32f2f;
+}
+
+.drop-zone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.drop-zone.dragover {
+    background: #e3f2fd;
+    border-color: #2196f3;
+}
+
+.status {
+    margin-bottom: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    display: none;
+}
+
+.status.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #4caf50;
+}
+
+.status.error {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #f44336;
+}
+
+.transfer-progress {
+    margin: 20px 0;
+    padding: 16px;
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.progress-bar-container {
+    height: 20px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #2196f3, #1976d2);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.progress-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.success-count {
+    color: #2e7d32;
+}
+
+.fail-count {
+    color: #c62828;
+}
+
+.history-container {
+    margin-top: 30px;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.transfer-history {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.history-item {
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: #f8f9fa;
+}
+
+.history-item .timestamp {
+    color: #666;
+    font-size: 12px;
+}
+
+.results-container {
+    margin-top: 20px;
+}
+
+.result-item {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.result-item.success {
+    background: #e8f5e9;
+    border: 1px solid #4caf50;
+}
+
+.result-item.error {
+    background: #ffebee;
+    border: 1px solid #f44336;
+}
+
+/* styles.cssに追加 */
+.contract-input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.contract-input-group .form-control {
+    flex: 1;
+}
+#manualTransferSection {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+    border: 1px solid #e0e0e0;
+}
+#manualTransferSection h3 {
+    color: #1a237e;
+    font-size: 18px;
+    margin: 0 0 20px 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e3f2fd;
+}
+
+.manual-transfer-inputs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.manual-transfer-inputs .form-control {
+    flex: 1;
+}
+
+.manual-transfers-list {
+    margin-top: 10px;
+}
+
+.manual-transfer-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.button-small {
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+/* プログレスステップのスタイル */
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    padding: 20px 0;
+}
+
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    right: 50px;
+    height: 2px;
+    background: #e0e0e0;
+    z-index: 1;
+}
+
+.progress-step {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.step-icon {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.step-number {
+    font-style: normal;
+    font-weight: bold;
+    color: #666;
+    transition: opacity 0.3s ease;
+}
+
+.check-icon {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    fill: #4caf50;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s ease;
+}
+
+.step-label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.step-description {
+    font-size: 12px;
+    color: #666;
+    min-height: 36px;
+}
+
+/* アクティブステップ */
+.progress-step.active .step-icon {
+    border-color: #2196f3;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+}
+
+.progress-step.active .step-label {
+    color: #2196f3;
+}
+
+.progress-step.active .step-description {
+    color: #333;
+}
+
+/* 完了ステップ */
+.progress-step.completed .step-icon {
+    border-color: #4caf50;
+    background: #4caf50;
+}
+
+.progress-step.completed .step-number {
+    opacity: 0;
+}
+
+.progress-step.completed .check-icon {
+    opacity: 1;
+    transform: scale(1);
+    fill: white;
+}
+
+/* 進行状況バーのアニメーション改善 */
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        #2196f3 25%,
+        #1976d2 25%,
+        #1976d2 50%,
+        #2196f3 50%,
+        #2196f3 75%,
+        #1976d2 75%,
+        #1976d2
+    );
+    background-size: 40px 40px;
+    animation: progress-bar-stripes 1s linear infinite;
+    transition: width 0.3s ease;
+}
+
+@keyframes progress-bar-stripes {
+    0% { background-position: 40px 0; }
+    100% { background-position: 0 0; }
+}
+
+/* 完了時のセレブレーション */
+.completion-celebration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.5s ease;
+}
+
+.celebration-content {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.celebration-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+    animation: bounce 1s infinite;
+}
+
+.celebration-stats {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.stat-item {
+    flex: 1;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.stat-value.success {
+    color: #4caf50;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* コンフェッティアニメーション */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #f00;
+    opacity: 0;
+}
+
+@keyframes confetti-fall {
+    0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+/* ローディングアニメーションのためのスタイル */
+.step-icon {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* ローディングスピナー */
+.loading-spinner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: #2196f3;
+    border-right-color: #2196f3;
+    opacity: 0;
+    transition: opacity 0.3s;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* パルスエフェクト */
+.pulse-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid #2196f3;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* アクティブステップのアニメーション */
+.progress-step.active .step-icon .loading-spinner {
+    opacity: 1;
+}
+
+.progress-step.active .step-icon .pulse-ring {
+    animation: pulse 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+}
+
+/* 処理中のステップアイコンのスタイル */
+.progress-step.active .step-icon {
+    border-color: #2196f3;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+}
+
+/* 完了時のアニメーション */
+@keyframes checkmark {
+    0% {
+        transform: scale(0) rotate(-45deg);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.progress-step.completed .check-icon {
+    animation: checkmark 0.5s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+/* バッチ処理のプログレスバーアニメーション改善 */
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        #2196f3 25%,
+        #1976d2 25%,
+        #1976d2 50%,
+        #2196f3 50%,
+        #2196f3 75%,
+        #1976d2 75%,
+        #1976d2
+    );
+    background-size: 20px 20px;
+    animation: progress-bar-stripes 1s linear infinite;
+    transition: width 0.3s ease;
+}
+
+@keyframes progress-bar-stripes {
+    0% { background-position: 20px 0; }
+    100% { background-position: 0 0; }
+}
+
+/* メタマスクアイコンのアニメーション */
+.metamask-prompt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff3e0;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: slideUp 0.3s forwards;
+}
+
+.metamask-icon {
+    width: 24px;
+    height: 24px;
+    animation: bounce 1s infinite;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* 処理中の詳細情報 */
+.processing-details {
+    background: rgba(33, 150, 243, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.processing-details-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.processing-count {
+    font-weight: bold;
+    color: #1976d2;
+}
+
+/* トランザクションのミニアニメーション */
+.transaction-pulse {
+    width: 8px;
+    height: 8px;
+    background: #4caf50;
+    border-radius: 50%;
+    margin-right: 10px;
+    animation: pulse-dot 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+}
+
+@keyframes pulse-dot {
+    0% { transform: scale(0.8); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(0.8); }
+}

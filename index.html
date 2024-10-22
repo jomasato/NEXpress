@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFT一括転送ツール（拡張版）</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>NFT一括転送ツール</h1>
+        
+        <div id="status" class="status"></div>
+        
+        <!-- ネットワーク選択部分 -->
+        <div class="form-group">
+            <label>ネットワーク選択</label>
+            <div class="network-selector">
+                <button class="network-button" data-chain-id="1" data-network-name="Ethereum">Ethereum</button>
+                <button class="network-button" data-chain-id="137" data-network-name="Polygon">Polygon</button>
+                <button class="network-button" data-chain-id="56" data-network-name="BSC">BSC</button>
+                <button class="network-button" data-chain-id="42161" data-network-name="Arbitrum">Arbitrum</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button id="connectWallet" class="button">ウォレット接続</button>
+        </div>
+
+        <!-- index.htmlのform-group内に追加 -->
+<div class="form-group">
+    <label for="contractAddress">NFTコントラクトアドレス</label>
+    <div class="contract-input-group">
+        <input type="text" id="contractAddress" class="form-control" placeholder="0x...">
+        <button onclick="setContract()" class="button button-secondary">設定</button>
+    </div>
+</div>
+
+<div id="manualTransferSection" class="form-group" style="display: none;">
+    <h3>NFT手動転送</h3>
+    <div class="manual-transfer-controls">
+        <select id="nftSelect" class="form-control">
+            <option value="">NFTを選択してください</option>
+        </select>
+        <input type="text" id="manualAddress" class="form-control" placeholder="送信先アドレス">
+        <button id="addTransferButton" class="button">追加</button>
+    </div>
+    <div id="manualTransfersList" class="manual-transfers-list">
+    </div>
+</div>
+
+        <div class="form-group">
+            <label>CSVファイル (TokenID, 送信先アドレス)</label>
+            <div id="dropZone" class="drop-zone">
+                ファイルをドロップ、またはクリックしてファイルを選択
+                <input type="file" id="fileInput" accept=".csv" style="display: none;" />
+            </div>
+        </div>
+
+        <!-- 詳細な進捗表示 -->
+         
+        <div id="transferProgress" class="transfer-progress" style="display: none;">
+            <!-- ステップインジケーターの更新 -->
+<div class="progress-steps">
+    <div class="progress-step" id="stepApproval">
+        <div class="step-icon">
+            <i class="step-number">1</i>
+            <div class="loading-spinner"></div>
+            <div class="pulse-ring"></div>
+            <svg class="check-icon" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+            </svg>
+        </div>
+        <div class="step-label">承認処理</div>
+        <div class="step-description">NFTの転送権限を承認中...</div>
+        <div class="metamask-prompt" style="display: none;">
+            <img src="metamask-icon.png" alt="MetaMask" class="metamask-icon">
+            <span>MetaMaskで承認してください</span>
+        </div>
+    </div>
+    <div class="progress-step" id="stepTransfer">
+        <div class="step-icon">
+            <i class="step-number">2</i>
+            <div class="loading-spinner"></div>
+            <div class="pulse-ring"></div>
+            <svg class="check-icon" viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+            </svg>
+        </div>
+        <div class="step-label">転送処理</div>
+        <div class="step-description">NFTを転送中...</div>
+        <div class="processing-details" style="display: none;">
+            <div class="processing-details-content">
+                <div class="transaction-pulse"></div>
+                <span class="processing-info">処理中のトランザクション:</span>
+                <span class="processing-count">0/0</span>
+            </div>
+        </div>
+    </div>
+</div>
+        
+            <!-- 詳細な進行状況 -->
+            <div class="progress-details">
+                <div class="progress-header">
+                    <span id="currentTask">準備中...</span>
+                    <span id="progressCount">0 / 0</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+                <div class="transfer-stats">
+                    <span id="successCount" class="success-count">成功: 0</span>
+                    <span id="failCount" class="fail-count">失敗: 0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 完了時のセレブレーション要素 -->
+<div id="completionCelebration" class="completion-celebration" style="display: none;">
+    <div class="celebration-content">
+        <div class="celebration-icon">🎉</div>
+        <h2>転送完了！</h2>
+        <div class="celebration-stats">
+            <div class="stat-item">
+                <div class="stat-label">転送成功</div>
+                <div id="finalSuccessCount" class="stat-value success">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">合計NFT</div>
+                <div id="finalTotalCount" class="stat-value">0</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <div class="form-group">
+            <button id="startTransfer" class="button" disabled>転送開始</button>
+        </div>
+
+        <!-- 転送履歴タブ -->
+        <div class="history-container">
+            <div class="history-header">
+                <h2>転送履歴</h2>
+                <button id="clearHistory" class="button button-secondary">履歴クリア</button>
+            </div>
+            <div id="transferHistory" class="transfer-history"></div>
+        </div>
+        
+        <div id="results" class="results-container"></div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
